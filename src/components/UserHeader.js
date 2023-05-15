@@ -1,11 +1,11 @@
 import { getUserData } from '../utils/getUserData';
 import { useEffect, useState } from 'react';
-const UserHeader = () => {
+const UserHeader = ({ username }) => {
   const [data, setData] = useState({});
   useEffect(() => {
-    const username = 'haitham-akram';
+    // const username = 'haitham-akram';
     getUserData(username).then((data) => setData(data));
-  }, []);
+  }, [data, username]);
   if (!data) {
     return <h3>...Loading</h3>;
   }
