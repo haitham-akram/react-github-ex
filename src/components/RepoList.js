@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 const RepoList = ({ username }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    // const username = 'haitham-akram';
-    getUserData(username).then((data) =>
-      getRepos(data.repos_url).then((data) => setData(data))
-    );
-  }, [data, username]);
+    if (username) {
+      getUserData(username).then((data) =>
+        getRepos(data.repos_url).then((data) => setData(data))
+      );
+    }
+  }, [username]);
   if (data.length !== 0) {
     const repos = data.map((repo) => (
       <div className="repo" key={repo.id}>
@@ -16,9 +17,23 @@ const RepoList = ({ username }) => {
         <p>{repo.description}</p>
       </div>
     ));
-    return <div className="repos">{repos}</div>;
+    return (
+      <>
+        <h3>repos: {repos.length} </h3>
+
+        <div className="repos">{repos}</div>
+      </>
+    );
   } else {
-    return <h3>...Loading</h3>;
+    return (
+      <section className="dots-container">
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+      </section>
+    );
   }
 };
 export default RepoList;
